@@ -61,6 +61,11 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
 def get_pie_chart(entered_site):
     if entered_site == 'ALL':
         # If 'ALL' is selected, return the pie chart for all sites
+        labels ={'0': 'Failed', '1': 'Success'}
+        #spacex_df['class'] = spacex_df['class'].map(labels)
+        #spacex_df['Launch Site'] = spacex_df['Launch Site'].astype(str)
+        
+        # Create a pie chart for all sites
         fig = px.pie(spacex_df, values='class', names='Launch Site', 
                      title='Total Success Launches by Site', labels={'class': 'Launch Success'})
     else:
@@ -68,7 +73,8 @@ def get_pie_chart(entered_site):
         filtered_df = spacex_df[spacex_df['Launch Site'] == entered_site]
         # Create a pie chart for the selected site
         fig = px.pie(filtered_df, names='class', 
-                     title=f'Success vs Failed Launches for {entered_site}')
+                     title=f'Success vs Failed Launches for {entered_site}',
+                     labels={'class': 'Launch Success'})
     return fig
 
 # TASK 4:
